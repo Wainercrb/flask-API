@@ -1,9 +1,11 @@
 import os
-import json
 from flask import make_response, jsonify
 from model.user import User
-from utils.passwordEncryption import encrypt_password, compare_passwords, generate_payload
 from utils.JwtToken import generate_token
+from utils.passwordEncryption import encrypt_password
+from utils.passwordEncryption import compare_passwords
+from utils.passwordEncryption import generate_payload
+
 
 def signup_service(userdata):
     try:
@@ -38,28 +40,38 @@ def login_service(user_credentials):
         users = User.objects[:1](email=user_credentials['email'])
 
         if (len(users) <= 0):
-            return make_response({ 'message': 'Invalid password'}, 403)
+            return make_response({'message': 'Invalid password'}, 403)
 
         secret = os.environ.get('TOKEN_SECRET')
 
         for user in users:
-            if compare_passwords(user_credentials['password'], user['password']):
+            if compare_passwords(
+                  user_credentials['password'],
+                  user['password']
+              ):
+
                 token = generate_token(generate_payload(user), secret)
 
                 user['password'] = None
 
-                return make_response({'token': token, 'user': user.to_json()}, 200)
+                return make_response(
+                    {'token': token, 'user': user.to_json()},
+                    200
+                )
+
             else:
                 return make_response({'message': 'Invalid password'}, 403)
 
     except Exception as e:
         return make_response({'message': str(e)}, 404)
 
+
 def get_users_service():
     try:
 
         users = User.objects.to_json()
 
-        return jsonify({ 'users': users }), 200
+        return jsonify({'users': users}), 200
+
     except Exception as e:
-        return make_response({'message': str(e)}, 404 )
+        return make_response({'message': str(e)}, 404)

@@ -31,7 +31,6 @@ def signup_service(userdata):
         return make_response({'message': 'succesfully inserted'}, 200)
 
     except Exception as e:
-        print(e)
         return make_response({'message': str(e)}, 404)
 
 
@@ -63,12 +62,12 @@ def login_service(user_credentials):
                 return make_response({'message': 'Invalid password'}, 403)
 
     except Exception as e:
+        print(e)
         return make_response({'message': str(e)}, 404)
 
 
 def get_users_service():
     try:
-
         users = User.objects.to_json()
 
         return jsonify({'users': users}), 200

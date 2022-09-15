@@ -1,18 +1,9 @@
 import os
-from flask import Flask
-from flask_cors import CORS
-from mongoengine import connect
+from api import create_app
 
-# import routes
-from api.user import user_route
+app = create_app(host=os.environ.get('MONGO_URI'),
+                db=os.environ.get('DATABASE'))
 
-app = Flask(__name__)
-app.register_blueprint(user_route)
-
-CORS(app)
-
-connect(host=os.environ.get('MONGO_URI'), db='arteria')
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.debug = True
     app.run(debug=True)

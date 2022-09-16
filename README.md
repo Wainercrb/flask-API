@@ -6,11 +6,17 @@ If you are interested in testing the code. Create a virtual environment:
 
 
 ```console
-run pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 If you want to check the code syntax, run:
 
 ``` console
-run flake8 --exclude=./venv, __pycache__
+flake8 --exclude=./venv, __pycache__
+```
+
+If you want to check the test, run:
+
+```console
+python -m pytest
 ```

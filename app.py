@@ -1,8 +1,9 @@
 import os
 from api import create_app
 
-app = create_app(host=os.environ.get('MONGO_URI'),
-                db=os.environ.get('DATABASE'))
+HOST = os.environ.get('MONGO_URI')
+DB = os.environ.get('DATABASE')
+app = create_app(host=HOST, db=DB)
 
 if __name__ == '__main__':
     app.debug = True

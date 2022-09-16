@@ -1,4 +1,5 @@
 import os
+import json
 from flask import make_response, jsonify
 from model.user import User
 from utils.JwtToken import generate_token
@@ -51,10 +52,10 @@ def login_service(user_credentials):
 
                 token = generate_token(generate_payload(user), secret)
 
-                user['password'] = None
+                user['password'] = '-'
 
                 return make_response(
-                    {'token': token, 'user': user.to_json()},
+                    {'token': token, 'user': json.loads(user.to_json())},
                     200
                 )
 
@@ -62,7 +63,6 @@ def login_service(user_credentials):
                 return make_response({'message': 'Invalid password'}, 403)
 
     except Exception as e:
-        print(e)
         return make_response({'message': str(e)}, 404)
 
 

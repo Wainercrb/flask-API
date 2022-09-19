@@ -2,13 +2,13 @@ import jwt
 import os
 from flask import make_response, request
 
+secret = os.environ.get('TOKEN_SECRET')
 
 def generate_token(payload, secret):
     return jwt.encode(payload, secret, algorithm="HS256")
 
 
 def validate_token(func):
-    secret = os.environ.get('TOKEN_SECRET')
 
     def wrapper(*args, **kwargs):
         try:

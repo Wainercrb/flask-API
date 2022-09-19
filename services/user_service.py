@@ -2,10 +2,10 @@ import os
 import json
 from flask import make_response, jsonify
 from model.user import User
-from utils.JwtToken import generate_token
-from utils.passwordEncryption import encrypt_password
-from utils.passwordEncryption import compare_passwords
-from utils.passwordEncryption import generate_payload
+from utils.jwt_token import generate_token
+from utils.password_encryption import encrypt_password
+from utils.password_encryption import compare_passwords
+from utils.password_encryption import generate_payload
 
 
 def signup_service(userdata):
